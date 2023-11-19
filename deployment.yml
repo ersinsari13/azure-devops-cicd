@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-baby
+  labels:
+    app: hello-baby
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-baby
+  template:
+    metadata:
+      labels:
+        app: hello-baby
+    spec:
+      containers:
+      - name: hello-baby
+        image: devopersin.azurecr.io/hello-baby:latest
+        ports:
+        - containerPort: 8888
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-baby
+spec:
+  type: LoadBalancer
+  selector:
+    app: hello-baby
+  ports:
+    - protocol: TCP
+      port: 8888
